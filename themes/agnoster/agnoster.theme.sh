@@ -101,27 +101,35 @@ fg_color() {
     case "$1" in
         black)      echo 30;;
         red)        echo 31;;
-        green)      echo 32;;
         yellow)     echo 33;;
         blue)       echo 34;;
         magenta)    echo 35;;
         cyan)       echo 36;;
         white)      echo 37;;
+        default)    echo 39;;
+        pink)       echo 38\;5\;219;;
+        lightgray)  echo 38\;5\;240;;
+        gray)       echo 38\;5\;234;;
         orange)     echo 38\;5\;166;;
-    esac
+        green)      echo 38\;5\;156;;
+    esac;
 }
 
 bg_color() {
     case "$1" in
         black)      echo 40;;
         red)        echo 41;;
-        green)      echo 42;;
         yellow)     echo 43;;
         blue)       echo 44;;
         magenta)    echo 45;;
         cyan)       echo 46;;
         white)      echo 47;;
+        default)    echo 49;;
+        pink)       echo 48\;5\;219;;
+        lightgray)  echo 48\;5\;240;;
+        gray)       echo 48\;5\;234;;
         orange)     echo 48\;5\;166;;
+        green)      echo 48\;5\;156;;
     esac;
 }
 
@@ -223,7 +231,7 @@ prompt_context() {
     local user=`whoami`
 
     if [[ $user != $DEFAULT_USER || -n $SSH_CLIENT ]]; then
-        prompt_segment black default "$user@\h"
+        prompt_segment gray green "$user"
     fi
 }
 
@@ -257,7 +265,7 @@ prompt_git() {
 
 # Dir: current working directory
 prompt_dir() {
-    prompt_segment blue black '\w'
+    prompt_segment lightgray pink '\W'
 }
 
 # Status:
@@ -271,7 +279,7 @@ prompt_status() {
     [[ $UID -eq 0 ]] && symbols+="$(ansi_single $(fg_color yellow))⚡"
     [[ $(jobs -l | wc -l) -gt 0 ]] && symbols+="$(ansi_single $(fg_color cyan))⚙"
 
-    [[ -n "$symbols" ]] && prompt_segment black default "$symbols"
+    [[ -n "$symbols" ]] && prompt_segment gray default "$symbols"
 }
 
 ######################################################################
